@@ -1,0 +1,62 @@
+import unittest
+
+#Import main medicine reminder functionality
+from Kai_Habit_Reminders import *
+from datetime import datetime
+
+import unittest
+from datetime import datetime
+
+#Unit test class for HabitReminder
+class TestHabitReminder(unittest.TestCase):
+    
+    def setUp(self):
+        # Create a new HabitReminder instance for each test
+        self.habit_reminder = HabitReminder()
+
+    def test_configure_schedule(self):
+        #Test habit configuration
+        self.habit_reminder.configure_schedule("08:00", "go for a walk")
+        self.habit_reminder.configure_schedule("09:00", "check your vitals")
+        
+        #Check if the habit schedule has been set up correctly
+        self.assertEqual(self.habit_reminder.habit_schedule["08:00"], "go for a walk")
+        self.assertEqual(self.habit_reminder.habit_schedule["09:00"], "check your vitals")
+
+    def test_check_and_remind_with_reminder(self):
+        #Test reminder function at the scheduled time
+        self.habit_reminder.configure_schedule("08:00", "go for a walk")
+        result = self.habit_reminder.check_and_remind("08:00")
+        self.assertEqual(result, "Reminder: It's time to go for a walk.")
+        self.assertEqual(self.habit_reminder.last_reminded_time, "08:00")
+
+    def test_check_and_remind_without_reminder(self):
+        #Test reminder function when no scheduled habit is present
+        self.habit_reminder.configure_schedule("08:00", "go for a walk")
+        result = self.habit_reminder.check_and_remind("09:00")
+        self.assertEqual(result, "No reminders at this time.")
+        self.assertIsNone(self.habit_reminder.last_reminded_time)
+
+    def test_multiple_habits(self):
+        #Test multiple habits configuration and reminders
+        self.habit_reminder.configure_schedule("08:00", "go for a walk")
+        self.habit_reminder.configure_schedule("09:00", "check your vitals")
+        self.habit_reminder.configure_schedule("10:00", "take a break")
+        
+        #Check different times
+        result1 = self.habit_reminder.check_and_remind("08:00")
+        result2 = self.habit_reminder.check_and_remind("09:00")
+        result3 = self.habit_reminder.check_and_remind("10:00")
+
+        #Validate responses
+        self.assertEqual(result1, "Reminder: It's time to go for a walk.")
+        self.assertEqual(result2, "Reminder: It's time to check your vitals.")
+        self.assertEqual(result3, "Reminder: It's time to take a break.")
+
+#---------Run the tests---------
+
+#Run the unit tests
+if __name__ == "__main__":
+    unittest.main()
+
+
