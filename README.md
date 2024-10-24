@@ -15,10 +15,10 @@
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a>
 
-<h3 align="center">project_title</h3>
+<h3 align="center">Agil3 Vitalink Voice Assistant</h3>
 
   <p align="center">
-    project_description
+    Vitalink Voice Assistant for senior citizens, integrated as an Alexa skill! 
     <br />
     <a href=https://github.com/nrusso5/CS555-Team-5"><strong>Explore the docs »</strong></a>
     <br />
@@ -59,7 +59,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Agil3 Vitalink Voice Assistant for Seniors]]
+Agil3 Vitalink Voice Assistant for Seniors
 
 SSW / CS 555 Team 3 Agil3 Voice A
 
