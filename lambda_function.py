@@ -34,14 +34,16 @@ class GetNewFactHandler(AbstractRequestHandler):
         # type: (HandlerInput) -> Response
         logger.info("In GetNewFactHandler")
 
-        # get localization data
-        data = handler_input.attributes_manager.request_attributes["_"]
+        # Provide the help message for the Vital Link skill on launch
+        help_message = (
+            "Hi! Welcome to Vital Link. I am your personal smart voice assistant. How can I assist you?"#I can assist you with managing your medication schedule. "
+            #"You can ask me to set reminders for your medicines, check existing reminders, "
+            #"or delete a reminder. For example, say 'Remind me to take my medicine at 8 AM,' "
+            #"or 'What are my reminders?' How can I assist you?"
+        )
 
-        random_fact = random.choice(data[prompts.FACTS])
-        speech = data[prompts.GET_FACT_MESSAGE].format(random_fact)
-
-        handler_input.response_builder.speak(speech).set_card(
-            SimpleCard(data[prompts.SKILL_NAME], random_fact))
+        # Respond with the help message
+        handler_input.response_builder.speak(help_message).ask(help_message)
         return handler_input.response_builder.response
 
 
@@ -191,6 +193,146 @@ class ResponseLogger(AbstractResponseInterceptor):
     def process(self, handler_input, response):
         # type: (HandlerInput, Response) -> None
         logger.debug("Alexa Response: {}".format(response))
+    
+
+
+class VitalLinkHelpIntentHandler(AbstractRequestHandler):
+    """Handler for VitalLinkHelpIntent."""
+
+    def can_handle(self, handler_input):
+        # type: (HandlerInput) -> bool
+        return is_intent_name("VitalLinkHelpIntent")(handler_input)
+
+    def handle(self, handler_input):
+        # type: (HandlerInput) -> Response
+        logger.info("In VitalLinkHelpIntentHandler")
+
+        # Define the help message for the Vital Link skill
+        help_message = (
+            "Say, help with, then the name of the feature. Features include medicine reminders, healthy habit reminders, health challenges, exercise tracking, or other."
+            #"Vital Link can assist you with managing your medication schedule. "
+            #"You can ask me to set reminders for your medicines, check existing reminders, "
+            #"or delete a reminder. For example, say 'Remind me to take my medicine at 8 AM,' "
+            #"or 'What are my reminders?' How can I assist you?"
+        )
+
+        # Respond with the help message
+        handler_input.response_builder.speak(help_message).ask(help_message)
+        return handler_input.response_builder.response
+
+
+class VitalLinkHelpIntent_MedicineRemindersHandler(AbstractRequestHandler):
+    """Handler for VitalLinkHelpIntent_MedicineReminders."""
+
+    def can_handle(self, handler_input):
+        # type: (HandlerInput) -> bool
+        return is_intent_name("VitalLinkHelpIntent_MedicineReminders")(handler_input)
+
+    def handle(self, handler_input):
+        # type: (HandlerInput) -> Response
+        logger.info("In VitalLinkHelpIntent_MedicineRemindersHandler")
+
+        # Define the help message for the Vital Link skill
+        help_message = (
+            "To check current medicine reminders, say, check medicine reminders. To delete a medicine reminder, say, delete medicine reminder, then say the name of the medicine reminder to delete. To add a new medicine reminder, say, add medicine reminder, then say the name of the medicine to be reminded about, then say the hour to be reminded at, then say whether the hour is A.M. or P.M. "
+        )
+
+        # Respond with the help message
+        handler_input.response_builder.speak(help_message).ask(help_message)
+        return handler_input.response_builder.response
+
+
+
+class VitalLinkHelpIntent_ExerciseTracking(AbstractRequestHandler):
+    """Handler for VitalLinkHelpIntent_ExerciseTracking."""
+
+    def can_handle(self, handler_input):
+        # type: (HandlerInput) -> bool
+        return is_intent_name("VitalLinkHelpIntent_ExerciseTracking")(handler_input)
+
+    def handle(self, handler_input):
+        # type: (HandlerInput) -> Response
+        logger.info("In VitalLinkHelpIntent_ExerciseTracking")
+
+        # Define the help message for the Vital Link skill
+        help_message = (
+            "To track your exercise, say, log exercise, then specify the type of exercise, duration, and intensity level. To check your logged exercises, say, check my exercise log. To delete an exercise entry, say, delete exercise, then specify which entry to remove."
+        )
+
+        # Respond with the help message
+        handler_input.response_builder.speak(help_message).ask(help_message)
+        return handler_input.response_builder.response
+        
+        
+        
+        
+
+
+class VitalLinkHelpIntent_HealthyHabitReminders(AbstractRequestHandler):
+    """Handler for VitalLinkHelpIntent_HealthyHabitReminders."""
+
+    def can_handle(self, handler_input):
+        # type: (HandlerInput) -> bool
+        return is_intent_name("VitalLinkHelpIntent_HealthyHabitReminders")(handler_input)
+
+    def handle(self, handler_input):
+        # type: (HandlerInput) -> Response
+        logger.info("In VitalLinkHelpIntent_HealthyHabitReminders")
+
+        # Define the help message for the Vital Link skill
+        help_message = (
+            "To check current healthy habit reminders, say, check healthy habit reminders. To delete a healthy habit reminder, say, delete healthy habit reminder, then specify the habit reminder to delete. To add a new healthy habit reminder, say, add healthy habit reminder, then name the habit and specify the time and whether it's A.M. or P.M."
+        )
+
+        # Respond with the help message
+        handler_input.response_builder.speak(help_message).ask(help_message)
+        return handler_input.response_builder.response
+
+
+
+class VitalLinkHelpIntent_HealthChallenges(AbstractRequestHandler):
+    """Handler for VitalLinkHelpIntent_HealthChallenges."""
+
+    def can_handle(self, handler_input):
+        # type: (HandlerInput) -> bool
+        return is_intent_name("VitalLinkHelpIntent_HealthChallenges")(handler_input)
+
+    def handle(self, handler_input):
+        # type: (HandlerInput) -> Response
+        logger.info("In VitalLinkHelpIntent_HealthChallenges")
+
+        # Define the help message for the Vital Link skill
+        help_message = (
+            "To view available health challenges, say, list health challenges. To join a challenge, say, join health challenge, then mention the challenge name. To check your progress in a challenge, say, check my challenge progress."
+        )
+
+        # Respond with the help message
+        handler_input.response_builder.speak(help_message).ask(help_message)
+        return handler_input.response_builder.response
+
+
+
+class VitalLinkHelpIntent_Other(AbstractRequestHandler):
+    """Handler for VitalLinkHelpIntent_Other."""
+
+    def can_handle(self, handler_input):
+        # type: (HandlerInput) -> bool
+        return is_intent_name("VitalLinkHelpIntent_Other")(handler_input)
+
+    def handle(self, handler_input):
+        # type: (HandlerInput) -> Response
+        logger.info("In VitalLinkHelpIntent_Other")
+
+        # Define the help message for the Vital Link skill
+        help_message = (
+            "For general assistance, say, help me with something else. If you need help with a specific feature, please specify the name of the feature, such as exercise tracking or healthy habit reminders."
+        )
+
+        # Respond with the help message
+        handler_input.response_builder.speak(help_message).ask(help_message)
+        return handler_input.response_builder.response
+
+
 
 
 # Register intent handlers
@@ -199,6 +341,12 @@ sb.add_request_handler(HelpIntentHandler())
 sb.add_request_handler(CancelOrStopIntentHandler())
 sb.add_request_handler(FallbackIntentHandler())
 sb.add_request_handler(SessionEndedRequestHandler())
+sb.add_request_handler(VitalLinkHelpIntentHandler()) 
+sb.add_request_handler(VitalLinkHelpIntent_MedicineRemindersHandler()) 
+sb.add_request_handler(VitalLinkHelpIntent_ExerciseTracking()) 
+sb.add_request_handler(VitalLinkHelpIntent_HealthyHabitReminders()) 
+sb.add_request_handler(VitalLinkHelpIntent_HealthChallenges()) 
+sb.add_request_handler(VitalLinkHelpIntent_Other()) 
 
 # Register exception handlers
 sb.add_exception_handler(CatchAllExceptionHandler())
