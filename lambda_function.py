@@ -289,6 +289,44 @@ class VitalLinkHelpIntent_HealthyHabitReminders(AbstractRequestHandler):
         return handler_input.response_builder.response
 
 
+class DeleteHealthyHabit(AbstractRequestHandler):
+    """Handler for saving habits"""
+    
+    def can_handle(self, handler_input):
+        return is_intent_name("DeleteHealthyHabit")(handler_input)
+        
+    def handle(self, handler_input):
+        logger.info("In DeleteHealthyHabit")
+        message = (
+            "To delete a habit, say the name of the habit you would like to delete."
+        )
+
+        # Respond with the help message
+        handler_input.response_builder.speak(message).ask(message)
+        return handler_input.response_builder.response
+    """Need to get the input to be able to delete the habit (should be the immediate response)"""
+
+
+
+
+class SaveHealthyHabit(AbstractRequestHandler):
+    """Handler for saving habits"""
+    
+    def can_handle(self, handler_input):
+        return is_intent_name("SaveHealthyHabit")(handler_input)
+        
+    def handle(self, handler_input):
+        logger.info("In SaveHealthyHabit")
+        message = (
+            "To add a habit, say the name of the habit you would like to add, followed by the time which you would like to be reminded."
+        )
+
+        # Respond with the help message
+        handler_input.response_builder.speak(message).ask(message)
+        return handler_input.response_builder.response
+    """Need to get the input to be able to save (immediate response)"""
+        
+
 
 class VitalLinkHelpIntent_HealthChallenges(AbstractRequestHandler):
     """Handler for VitalLinkHelpIntent_HealthChallenges."""
@@ -518,7 +556,9 @@ sb.add_request_handler(SessionEndedRequestHandler())
 sb.add_request_handler(VitalLinkHelpIntentHandler()) 
 sb.add_request_handler(VitalLinkHelpIntent_MedicineRemindersHandler()) 
 sb.add_request_handler(VitalLinkHelpIntent_ExerciseTracking()) 
-sb.add_request_handler(VitalLinkHelpIntent_HealthyHabitReminders()) 
+sb.add_request_handler(VitalLinkHelpIntent_HealthyHabitReminders())
+sb.add_request_handler(DeleteHealthyHabit())
+sb.add_request_handler(SaveHealthyHabit()) 
 sb.add_request_handler(VitalLinkHelpIntent_HealthChallenges()) 
 sb.add_request_handler(VitalLinkHelpIntent_GuidedBreathing()) 
 sb.add_request_handler(VitalLinkHelpIntent_Other()) 
