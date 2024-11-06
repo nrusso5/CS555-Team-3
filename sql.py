@@ -3,11 +3,13 @@ from cryptography.fernet import Fernet
 
 class mySQLdb:
     def __init__(self, host, user, password, database, key=None):
+        host, port = host.split(":")
         self.conn = mysql.connector.connect(
-            host='localhost',
-            user='root',
-            password='PAssword21!',
-            database='test_db'
+            host=host,
+            port=int(port),
+            user=user,
+            password=password,
+            database=database
         )
         if not key:
             self.key = Fernet.generate_key()
@@ -16,55 +18,65 @@ class mySQLdb:
         self.cipher = Fernet(self.key)
         self.cursor = self.conn.cursor()
 
+
     def encrypt_data(self, data):
         return self.cipher.encrypt(data.encode())
 
+
     def decrypt_data(self, data: bytes):
-        return self.cipher.decrypt(data).decode()
+        if isinstance(data, str):
+            data = data.encode()  
+        return self.cipher.decrypt(data).decode() 
+
 
     def insert_contact_info(self, full_name, phone_number):
         """
         Send contact information into mysql database
         """
         full_name = self.encrypt_data(full_name)
-        phone_number = self.encrypt_data(full_name)
+        phone_number = self.encrypt_data(phone_number)
 
-        sql = "INSERT INTO contactinformation (full_name, phone_number) VALUES (%s, %s)"
-        self.cursor.execute(sql, (full_name, phone_number))
-        self.conn.commit()
-        print(f'User {full_name}, with phone number: {phone_number} added')
+        sql = "INSERT INTO contact_information (full_name, phone_number) VALUES (%s, %s)"
+        self.execute_sql(sql, full_name, phone_number)
+
 
     def insert_health_information(self, id, comments):
         """
         Send health information into mysql database
         """
         comments = self.encrypt_data(comments)
-        sql = "INSERT INTO healthinformation (id, comments) VALUES (%s, %s)"
-        self.cursor.execute(sql, (id, comments))
-        self.conn.commit()
-        print(f'User {id} added')
+        sql = "INSERT INTO health_information (id, comments) VALUES (%s, %s)"
+        self.execute_sql(sql, id, comments)
+
 
     def fetch_contact_by_id(self, id):
         """
         Fetch contact information by userID
         """
-        sql = "SELECT * FROM contactinformation WHERE ID = %s"
+        sql = "SELECT * FROM contact_information WHERE ID = %s"
         self.cursor.execute(sql, (id,))
         results = self.cursor.fetchall()
-        results = self.decrypt_data(results[0][1])
-        results2 = self.decrypt_data(results[0][2])
-        return results, results2
+        name = self.decrypt_data(results[0][1])
+        phone_number = self.decrypt_data(results[0][2])
+        return name, phone_number
+
 
     def fetch_health_information_by_id(self, id):
         """
         Fetch health information by userID 
         """
-        sql = "SELECT * FROM healthinformation WHERE ID = %s"
+        sql = "SELECT * FROM health_information WHERE ID = %s"
         self.cursor.execute(sql, (id,))
         results = self.cursor.fetchall()
-        results = self.decrypt_data(results[0][0])
-        results2 = self.decrypt_data(results[0][1])
-        return results
+        id = results[0][0]
+        comments = self.decrypt_data(results[0][1])
+        return id, comments
+        
+
+    def execute_sql(self, sql, s1, s2=None):
+        self.cursor.execute(sql, (s1, s2))
+        self.conn.commit
+
 
     def log_changes(self, user, database, action, time):
         """
@@ -81,6 +93,5 @@ class mySQLdb:
         print("Changelog saved")
 
 
-
     if __name__ == '__main__':
-        quit()
+        pass
