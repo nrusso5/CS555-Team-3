@@ -1,0 +1,11 @@
+{
+    "en": {
+        "SKILL_NAME": "Vital Link",
+        "HELP_MESSAGE": "Say, help with, then the name of the feature. Features include medicine reminders, healthy habit reminders, health challenges, exercise tracking, or other.",
+        "HELP_REPROMPT": "What can I help you with?",
+        "FALLBACK_MESSAGE": "Sorry, I cannot understand that. Say, vital link help, if you need help with vital link.",
+        "FALLBACK_REPROMPT": "What can I help you with?",
+        "ERROR_MESSAGE": "Sorry, an error occurred.",
+        "STOP_MESSAGE": "Goodbye!"
+    }
+}
