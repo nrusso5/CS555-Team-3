@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-"""Simple fact sample app."""
 
 import random
 import logging
@@ -196,7 +195,7 @@ class ResponseLogger(AbstractResponseInterceptor):
     
 
 
-class VitalLinkHelpIntentHandler(AbstractRequestHandler):
+class VitalLinkGeneralHelp(AbstractRequestHandler):
     """Handler for VitalLinkHelpIntent."""
 
     def can_handle(self, handler_input):
@@ -205,23 +204,17 @@ class VitalLinkHelpIntentHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
-        logger.info("In VitalLinkHelpIntentHandler")
+        logger.info("In VitalLinkGeneralHelp")
 
-        # Define the help message for the Vital Link skill
-        help_message = (
-            "Say, help with, then the name of the feature. Features include medicine reminders, healthy habit reminders, health challenges, exercise tracking, guided breathing exercises, or other."
-            #"Vital Link can assist you with managing your medication schedule. "
-            #"You can ask me to set reminders for your medicines, check existing reminders, "
-            #"or delete a reminder. For example, say 'Remind me to take my medicine at 8 AM,' "
-            #"or 'What are my reminders?' How can I assist you?"
-        )
+        #Call the help message for the Vital Link skill
+        help_message = help_messages["general"]
 
         # Respond with the help message
         handler_input.response_builder.speak(help_message).ask(help_message)
         return handler_input.response_builder.response
 
 
-class VitalLinkHelpIntent_MedicineRemindersHandler(AbstractRequestHandler):
+class MedicineRemindersHelp(AbstractRequestHandler):
     """Handler for VitalLinkHelpIntent_MedicineReminders."""
 
     def can_handle(self, handler_input):
@@ -230,12 +223,11 @@ class VitalLinkHelpIntent_MedicineRemindersHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
-        logger.info("In VitalLinkHelpIntent_MedicineRemindersHandler")
+        logger.info("In MedicineRemindersHelp")
 
         # Define the help message for the Vital Link skill
-        help_message = (
-            "To check current medicine reminders, say, check medicine reminders. To delete a medicine reminder, say, delete medicine reminder, then say the name of the medicine reminder to delete. To add a new medicine reminder, say, add medicine reminder, then say the name of the medicine to be reminded about, then say the hour to be reminded at, then say whether the hour is A.M. or P.M. "
-        )
+        help_message = help_messages["medicine_reminders"]
+
 
         # Respond with the help message
         handler_input.response_builder.speak(help_message).ask(help_message)
@@ -243,7 +235,7 @@ class VitalLinkHelpIntent_MedicineRemindersHandler(AbstractRequestHandler):
 
 
 
-class VitalLinkHelpIntent_ExerciseTracking(AbstractRequestHandler):
+class ExerciseTrackingHelp(AbstractRequestHandler):
     """Handler for VitalLinkHelpIntent_ExerciseTracking."""
 
     def can_handle(self, handler_input):
@@ -252,23 +244,17 @@ class VitalLinkHelpIntent_ExerciseTracking(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
-        logger.info("In VitalLinkHelpIntent_ExerciseTracking")
+        logger.info("In ExerciseTrackingHelp")
 
-        # Define the help message for the Vital Link skill
-        help_message = (
-            "To track your exercise, say, log exercise, then specify the type of exercise, duration, and intensity level. To check your logged exercises, say, check my exercise log. To delete an exercise entry, say, delete exercise, then specify which entry to remove."
-        )
+        #Call the help message for the Vital Link skill
+        help_message = help_messages["exercise_tracking"]
 
         # Respond with the help message
         handler_input.response_builder.speak(help_message).ask(help_message)
         return handler_input.response_builder.response
-        
-        
-        
-        
 
 
-class VitalLinkHelpIntent_HealthyHabitReminders(AbstractRequestHandler):
+class HealthyHabitRemindersHelp(AbstractRequestHandler):
     """Handler for VitalLinkHelpIntent_HealthyHabitReminders."""
 
     def can_handle(self, handler_input):
@@ -277,16 +263,16 @@ class VitalLinkHelpIntent_HealthyHabitReminders(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
-        logger.info("In VitalLinkHelpIntent_HealthyHabitReminders")
+        logger.info("In HealthyHabitRemindersHelp")
 
         # Define the help message for the Vital Link skill
-        help_message = (
-            "To check current healthy habit reminders, say, check healthy habit reminders. To delete a healthy habit reminder, say, delete healthy habit reminder, then specify the habit reminder to delete. To add a new healthy habit reminder, say, add healthy habit reminder, then name the habit and specify the time and whether it's A.M. or P.M."
-        )
+        help_message = help_messages["healthy_habit_reminders"]
 
         # Respond with the help message
         handler_input.response_builder.speak(help_message).ask(help_message)
         return handler_input.response_builder.response
+
+
 
 
 class DeleteHealthyHabit(AbstractRequestHandler):
@@ -325,10 +311,9 @@ class SaveHealthyHabit(AbstractRequestHandler):
         handler_input.response_builder.speak(message).ask(message)
         return handler_input.response_builder.response
     """Need to get the input to be able to save (immediate response)"""
-        
 
 
-class VitalLinkHelpIntent_HealthChallenges(AbstractRequestHandler):
+class HealthChallengesHelp(AbstractRequestHandler):
     """Handler for VitalLinkHelpIntent_HealthChallenges."""
 
     def can_handle(self, handler_input):
@@ -337,12 +322,10 @@ class VitalLinkHelpIntent_HealthChallenges(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
-        logger.info("In VitalLinkHelpIntent_HealthChallenges")
+        logger.info("In HealthChallengesHelp")
 
         # Define the help message for the Vital Link skill
-        help_message = (
-            "To view available health challenges, say, list health challenges. To join a challenge, say, join health challenge, then mention the challenge name. To check your progress in a challenge, say, check my challenge progress."
-        )
+        help_message = help_messages["health_challenges"]
 
         # Respond with the help message
         handler_input.response_builder.speak(help_message).ask(help_message)
@@ -350,7 +333,7 @@ class VitalLinkHelpIntent_HealthChallenges(AbstractRequestHandler):
 
 
 
-class VitalLinkHelpIntent_GuidedBreathing(AbstractRequestHandler):
+class GuidedBreathingHelp(AbstractRequestHandler):
     """Handler for VitalLinkHelpIntent_GuidedBreathing."""
 
     def can_handle(self, handler_input):
@@ -359,12 +342,10 @@ class VitalLinkHelpIntent_GuidedBreathing(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
-        logger.info("In VitalLinkHelpIntent_GuidedBreathing")
+        logger.info("In GuidedBreathingHelp")
 
         # Define the help message for the Vital Link skill
-        help_message = (
-            "To choose a post-workout cooldown breathing exercise, say, cooldown breathing. To instead choose a relaxing and de-stressing breathing exercise, say, relaxing breathing."
-        )
+        help_message = help_messages["guided_breathing"]
 
         # Respond with the help message
         handler_input.response_builder.speak(help_message).ask(help_message)
@@ -372,7 +353,7 @@ class VitalLinkHelpIntent_GuidedBreathing(AbstractRequestHandler):
 
 
 
-class VitalLinkHelpIntent_Other(AbstractRequestHandler):
+class VitalLinkOtherHelp(AbstractRequestHandler):
     """Handler for VitalLinkHelpIntent_Other."""
 
     def can_handle(self, handler_input):
@@ -381,12 +362,10 @@ class VitalLinkHelpIntent_Other(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
-        logger.info("In VitalLinkHelpIntent_Other")
+        logger.info("In VitalLinkOtherHelp")
 
-        # Define the help message for the Vital Link skill
-        help_message = (
-            "For general assistance, say, help me with something else. If you need help with a specific feature, please specify the name of the feature, such as exercise tracking or healthy habit reminders."
-        )
+        #Call the help message for the Vital Link skill
+        help_message = help_messages["other"]
 
         # Respond with the help message
         handler_input.response_builder.speak(help_message).ask(help_message)
@@ -405,50 +384,7 @@ class Breathing_Cooldown(AbstractRequestHandler):
         # type: (HandlerInput) -> Response
         logger.info("In Breathing_Cooldown")
         
-        message = (
-            "<speak>"
-            "Let's begin your post-workout cooldown. Find a comfortable standing or seated position. "
-            "<break time='5s'/>"
-            
-            "Starting with quick controlled breaths. Follow my pace... "
-            "<break time='1s'/>"
-            "In... <break time='2s'/> Out... <break time='2s'/> "
-            "In... <break time='2s'/> Out... <break time='2s'/> "
-            "In... <break time='2s'/> Out... <break time='2s'/> "
-            "<break time='1s'/>"
-            
-            "Good. Now extending to 3 counts. "
-            "Breathe in... 2... 3... <break time='3s'/> "
-            "And out... 2... 3... <break time='3s'/> "
-            "In... 2... 3... <break time='3s'/> "
-            "Out... 2... 3... <break time='3s'/> "
-            "<break time='1s'/>"
-            
-            "Excellent. Final extension to 4 counts. "
-            "Inhale... 2... 3... 4... <break time='4s'/> "
-            "Exhale... 2... 3... 4... <break time='4s'/> "
-            "In... 2... 3... 4... <break time='4s'/> "
-            "Out... 2... 3... 4... <break time='4s'/> "
-            "<break time='1s'/>"
-            
-            "Now moving to deep cooldown. "
-            "Breathe in through your nose for 5... <break time='5s'/> "
-            "Hold briefly... <break time='1s'/> "
-            "And exhale slowly for 7... <break time='7s'/> "
-            "<break time='2s'/>"
-            
-            "One more deep breath. "
-            "In through your nose... <break time='5s'/> "
-            "Hold... <break time='1s'/> "
-            "And release... <break time='7s'/> "
-            
-            "For the final minute, return to breathing at your natural pace. "
-            "Notice how your heart rate has calmed. "
-            "<break time='5s'/>"
-            
-            "Your cooldown is complete. Would you like to do another breathing exercise?"
-            "</speak>"
-        )
+        message = breathing_messages["cooldown"]
         
         reprompt = "Would you like to do another breathing exercise?"
         
@@ -468,73 +404,7 @@ class Breathing_Relaxing(AbstractRequestHandler):
         # type: (HandlerInput) -> Response
         logger.info("In Breathing_Relaxing")
         
-        message = (
-            "<speak>"
-            "I'll guide you through a calming breathing exercise. Find any comfortable position. "
-            "If you can, place one hand on your chest and one on your belly. "
-            "<break time='5s'/>"
-            
-            "Let's start with three slow breaths at your own pace. "
-            "Just breathe in... <break time='4s'/> and out... <break time='4s'/> "
-            "In... <break time='4s'/> and out... <break time='4s'/> "
-            "In... <break time='4s'/> and out... <break time='4s'/> "
-            
-            "Now we'll establish a gentle rhythm. "
-            "<break time='2s'/>"
-            
-            "Breathe in for 4... <break time='4s'/> "
-            "Out for 6... <break time='6s'/> "
-            "Pause for 2... <break time='2s'/> "
-            
-            "Again, in for 4... <break time='4s'/> "
-            "Out for 6... <break time='6s'/> "
-            "Pause for 2... <break time='2s'/> "
-            
-            "With each exhale, feel the tension leaving your body. "
-            "<break time='2s'/>"
-            
-            "In for 4... <break time='4s'/> "
-            "Out for 6... <break time='6s'/> "
-            "Pause for 2... <break time='2s'/> "
-            
-            "As we continue breathing, let's release any tension. "
-            "On your next exhale, let your shoulders drop. "
-            "In... <break time='4s'/> "
-            "Out and release... <break time='6s'/> "
-            
-            "Next breath, unclench your jaw. "
-            "In... <break time='4s'/> "
-            "Out and relax... <break time='6s'/> "
-            
-            "This time, soften your belly. "
-            "In... <break time='4s'/> "
-            "Out and let go... <break time='6s'/> "
-            
-            "<break time='2s'/>"
-            "You're doing great. Remember, you are safe in this moment. "
-            "<break time='2s'/>"
-            
-            "A few more calming breaths. "
-            "In through your nose... <break time='4s'/> "
-            "Out through your mouth... <break time='6s'/> "
-            "<break time='2s'/>"
-            
-            "In... <break time='4s'/> "
-            "Out... <break time='6s'/> "
-            "<break time='2s'/>"
-            
-            "For our final minute, breathe naturally. Feel the calm in your body. "
-            "<break time='10s'/>"
-            
-            "Notice how much calmer you feel now. "
-            "<break time='3s'/>"
-            
-            "When you're ready, slowly open your eyes if they were closed. "
-            "<break time='3s'/>"
-            
-            "Would you like to repeat this exercise or try a different breathing routine?"
-            "</speak>"
-        )
+        message = breathing_messages["relaxing"]
         
         reprompt = "Would you like to repeat this relaxation exercise or try a different breathing routine?"
         
@@ -553,15 +423,15 @@ sb.add_request_handler(HelpIntentHandler())
 sb.add_request_handler(CancelOrStopIntentHandler())
 sb.add_request_handler(FallbackIntentHandler())
 sb.add_request_handler(SessionEndedRequestHandler())
-sb.add_request_handler(VitalLinkHelpIntentHandler()) 
-sb.add_request_handler(VitalLinkHelpIntent_MedicineRemindersHandler()) 
-sb.add_request_handler(VitalLinkHelpIntent_ExerciseTracking()) 
-sb.add_request_handler(VitalLinkHelpIntent_HealthyHabitReminders())
+sb.add_request_handler(VitalLinkGeneralHelp()) 
+sb.add_request_handler(MedicineRemindersHelp()) 
+sb.add_request_handler(ExerciseTrackingHelp()) 
+sb.add_request_handler(HealthyHabitRemindersHelp()) 
 sb.add_request_handler(DeleteHealthyHabit())
-sb.add_request_handler(SaveHealthyHabit()) 
-sb.add_request_handler(VitalLinkHelpIntent_HealthChallenges()) 
-sb.add_request_handler(VitalLinkHelpIntent_GuidedBreathing()) 
-sb.add_request_handler(VitalLinkHelpIntent_Other()) 
+sb.add_request_handler(SaveHealthyHabit())
+sb.add_request_handler(HealthChallengesHelp()) 
+sb.add_request_handler(GuidedBreathingHelp()) 
+sb.add_request_handler(VitalLinkOtherHelp()) 
 sb.add_request_handler(Breathing_Cooldown()) 
 sb.add_request_handler(Breathing_Relaxing()) 
 
@@ -575,3 +445,117 @@ sb.add_global_response_interceptor(ResponseLogger())
 
 # Handler name that is used on AWS lambda
 lambda_handler = sb.lambda_handler()
+
+
+
+
+
+
+
+#Dictionary to store the long breathing messages
+breathing_messages = {
+    "cooldown": (
+        "<speak>"
+        "Let's begin your post-workout cooldown. Find a comfortable standing or seated position. "
+        "<break time='5s'/>"
+        
+        "Starting with quick controlled breaths. Follow my pace... "
+        "<break time='1s'/>"
+        "In... <break time='2s'/> Out... <break time='2s'/> "
+        "In... <break time='2s'/> Out... <break time='2s'/> "
+        "In... <break time='2s'/> Out... <break time='2s'/> "
+        "<break time='1s'/>"
+        
+        "Good. Now extending to 3 counts. "
+        "Breathe in... 2... 3... <break time='3s'/> "
+        "And out... 2... 3... <break time='3s'/> "
+        "In... 2... 3... <break time='3s'/> "
+        "Out... 2... 3... <break time='3s'/> "
+        "<break time='1s'/>"
+        
+        "Excellent. Final extension to 4 counts. "
+        "Inhale... 2... 3... 4... <break time='4s'/> "
+        "Exhale... 2... 3... 4... <break time='4s'/> "
+        "In... 2... 3... 4... <break time='4s'/> "
+        "Out... 2... 3... 4... <break time='4s'/> "
+        "<break time='1s'/>"
+        
+        "Now moving to deep cooldown. "
+        "Breathe in through your nose for 5... <break time='5s'/> "
+        "Hold briefly... <break time='1s'/> "
+        "And exhale slowly for 7... <break time='7s'/> "
+        "<break time='2s'/>"
+        
+        "One more deep breath. "
+        "In through your nose... <break time='5s'/> "
+        "Hold... <break time='1s'/> "
+        "And release... <break time='7s'/> "
+        
+        "For the final minute, return to breathing at your natural pace. "
+        "Notice how your heart rate has calmed. "
+        "<break time='5s'/>"
+        
+        "Your cooldown is complete. Would you like to do another breathing exercise?"
+        "</speak>"
+    ),
+    "relaxing": (
+        "<speak>"
+        "I'll guide you through a calming breathing exercise. Find any comfortable position. "
+        "If you can, place one hand on your chest and one on your belly. "
+        "<break time='5s'/>"
+        
+        "Let's start with three slow breaths at your own pace. "
+        "Just breathe in... <break time='5s'/> and out... "
+        
+        "Great. Now we'll slow it down further. "
+        "Inhale... for 4... <break time='4s'/> "
+        "Exhale... for 6... <break time='6s'/> "
+        "Inhale... <break time='4s'/> "
+        "Exhale... <break time='6s'/> "
+        
+        "Let's repeat once more. "
+        "Breathe in for 4... <break time='4s'/> "
+        "Breathe out for 6... <break time='6s'/> "
+        "<break time='1s'/>"
+        
+        "Finally, let's take a deep, slow breath in... <break time='4s'/> "
+        "Hold it... <break time='2s'/> "
+        "And release gently. <break time='7s'/> "
+        
+        "That's the end of the exercise. Notice the calmness. "
+        "</speak>"
+    )
+}
+
+
+#Dictionary to store the help messages
+help_messages = {
+    "general": (
+        "Say, help with, then the name of the feature. Features include medicine reminders, healthy habit reminders, health challenges, exercise tracking, guided breathing exercises, or other."
+    ),
+    "medicine_reminders": (
+        "To check current medicine reminders, say, check medicine reminders. To delete a medicine reminder, say, delete medicine reminder, then say the name of the medicine reminder to delete. To add a new medicine reminder, say, add medicine reminder, then say the name of the medicine to be reminded about, then say the hour to be reminded at, then say whether the hour is A.M. or P.M."
+    ),
+    "exercise_tracking": (
+        "To track your exercise, say, log exercise, then specify the type of exercise, duration, and intensity level. To check your logged exercises, say, check my exercise log. To delete an exercise entry, say, delete exercise, then specify which entry to remove."
+    ),
+    "healthy_habit_reminders": (
+        "To check current healthy habit reminders, say, check healthy habit reminders. To delete a healthy habit reminder, say, delete healthy habit reminder, then specify the habit reminder to delete. To add a new healthy habit reminder, say, add healthy habit reminder, then name the habit and specify the time and whether it's A.M. or P.M."
+    ),
+    "health_challenges": (
+        "To view available health challenges, say, list health challenges. To join a challenge, say, join health challenge, then mention the challenge name. To check your progress in a challenge, say, check my challenge progress."
+    ),
+    "guided_breathing": (
+        "To choose a post-workout cooldown breathing exercise, say, cooldown breathing. To instead choose a relaxing and de-stressing breathing exercise, say, relaxing breathing."
+    ),
+    "other": (
+        "For general assistance, say, help me with something else. If you need help with a specific feature, please specify the name of the feature, such as exercise tracking or healthy habit reminders."
+    )
+}
+
+
+
+
+
+
+
