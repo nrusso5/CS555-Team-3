@@ -11,6 +11,7 @@ from ask_sdk_core.dispatch_components import (
     AbstractRequestInterceptor, AbstractResponseInterceptor)
 from ask_sdk_core.utils import is_request_type, is_intent_name
 from ask_sdk_core.handler_input import HandlerInput
+from ask_sdk_model.dialog import DelegateDirective
 
 from ask_sdk_model.ui import SimpleCard
 from ask_sdk_model import Response
@@ -286,11 +287,13 @@ class DeleteHealthyHabit(AbstractRequestHandler):
         message = (
             "To delete a habit, say the name of the habit you would like to delete."
         )
-
         # Respond with the help message
         handler_input.response_builder.speak(message).ask(message)
         return handler_input.response_builder.response
     """Need to get the input to be able to delete the habit (should be the immediate response)"""
+    """Temp branching to separate intent for use"""
+    
+
 
 
 
@@ -306,11 +309,48 @@ class SaveHealthyHabit(AbstractRequestHandler):
         message = (
             "To add a habit, say the name of the habit you would like to add, followed by the time which you would like to be reminded."
         )
-
         # Respond with the help message
         handler_input.response_builder.speak(message).ask(message)
         return handler_input.response_builder.response
     """Need to get the input to be able to save (immediate response)"""
+    """Temp branching to separate intent for use"""
+
+
+class returnInfoandAddHabit(AbstractRequestHandler):
+    def can_handle(self, handler_input):
+        return is_intent_name("returnInfoandAddHabit")(handler_input)
+    
+    def handle(self, handler_input):
+        logger.debug("In returnInfoandAddHabit")
+        attributes_manager = handler_input.attributes_manager
+        session_attr = attributes_manager.session_attributes
+        
+        habit = handler_input.request_envelope.request.intent.slots["habit"].value
+        session_attr["habit"] = habit
+        
+        speech = f"The habit {habit} has been added."
+        handler_input.response_builder.speak(speech).set_should_end_session(False)
+        return handler_input.response_builder.response
+
+
+class returnInfoandDeleteHabit(AbstractRequestHandler):
+    def can_handle(self, handler_input):
+        return is_intent_name("returnInfoandDeleteHabit")(handler_input)
+    
+    def handle(self, handler_input):
+        logger.debug("In returnInfoandDeleteHabit")
+        attributes_manager = handler_input.attributes_manager
+        session_attr = attributes_manager.session_attributes
+        
+        habit = handler_input.request_envelope.request.intent.slots["habit"].value
+        session_attr["habit"] = habit
+        
+        speech = f"The habit {habit} has been deleted."
+        handler_input.response_builder.speak(speech).set_should_end_session(False)
+        return handler_input.response_builder.response
+
+
+
 
 
 class HealthChallengesHelp(AbstractRequestHandler):
@@ -428,6 +468,8 @@ sb.add_request_handler(MedicineRemindersHelp())
 sb.add_request_handler(ExerciseTrackingHelp()) 
 sb.add_request_handler(HealthyHabitRemindersHelp()) 
 sb.add_request_handler(DeleteHealthyHabit())
+sb.add_request_handler(returnInfoandDeleteHabit())
+sb.add_request_handler(returnInfoandAddHabit())
 sb.add_request_handler(SaveHealthyHabit())
 sb.add_request_handler(HealthChallengesHelp()) 
 sb.add_request_handler(GuidedBreathingHelp()) 
