@@ -285,7 +285,7 @@ class DeleteHealthyHabit(AbstractRequestHandler):
     def handle(self, handler_input):
         logger.info("In DeleteHealthyHabit")
         message = (
-            "To delete a habit, say the name of the habit you would like to delete."
+            "To delete a habit, say remove or delete, then the name of the habit you would like to delete followed by the time of the habit."
         )
         # Respond with the help message
         handler_input.response_builder.speak(message).ask(message)
@@ -307,7 +307,7 @@ class SaveHealthyHabit(AbstractRequestHandler):
     def handle(self, handler_input):
         logger.info("In SaveHealthyHabit")
         message = (
-            "To add a habit, say the name of the habit you would like to add, followed by the time which you would like to be reminded."
+            "To add a habit, say add, then the name of the habit you would like to add, followed by the time which you would like to be reminded."
         )
         # Respond with the help message
         handler_input.response_builder.speak(message).ask(message)
@@ -316,6 +316,13 @@ class SaveHealthyHabit(AbstractRequestHandler):
     """Temp branching to separate intent for use"""
 
 
+"""RETURN INFO FOR HABIT REMINDERS"""
+
+"""CURRENT VERSION DOES NOT RECORD CONVERSATION HISTORY"""
+"""NEED TO IMPLEMENT ERROR HANDLING (I.E. THE NONE MESSAGES)"""
+
+"""add {habit} at {time}"""
+"""add "some habit" at "some time" """
 class returnInfoandAddHabit(AbstractRequestHandler):
     def can_handle(self, handler_input):
         return is_intent_name("returnInfoandAddHabit")(handler_input)
@@ -331,11 +338,15 @@ class returnInfoandAddHabit(AbstractRequestHandler):
         time = handler_input.request_envelope.request.intent.slots["time"].value
         session_attr["time"] = time
         
+        """Clear to interact with the database"""
+        
         speech = f"The habit {habit} at {time} has been added."
         handler_input.response_builder.speak(speech).set_should_end_session(False)
         return handler_input.response_builder.response
 
 
+"""remove/delete {habit} at {time}"""
+"""remove/delete "some habit" at "some time" """
 class returnInfoandDeleteHabit(AbstractRequestHandler):
     def can_handle(self, handler_input):
         return is_intent_name("returnInfoandDeleteHabit")(handler_input)
@@ -351,10 +362,65 @@ class returnInfoandDeleteHabit(AbstractRequestHandler):
         time = handler_input.request_envelope.request.intent.slots["time"].value
         session_attr["time"] = time
         
+        """Clear to interact with the database"""
+        
         speech = f"The habit {habit} at {time} has been deleted."
         handler_input.response_builder.speak(speech).set_should_end_session(False)
         return handler_input.response_builder.response
 
+"""RETURN INFO FOR MEDICINE REMINDERS"""
+"""CURRENT VERSION DOES NOT RECORD CONVERSATION HISTORY"""
+"""NEED TO IMPLEMENT ERROR HANDLING (I.E. THE NONE MESSAGES)"""
+
+
+"""add medicine {medicine} at {time}"""
+"""add medicine "some habit" at "some time" """
+
+"""If you need to input any medicines which are not being recognized by the Alexa, go to the console, to BUILD, then to Slot Types, and finally Medicine. Manually input whatever you need"""
+class returnInfoandAddMedicine(AbstractRequestHandler):
+    def can_handle(self, handler_input):
+        return is_intent_name("returnInfoandAddMedicine")(handler_input)
+    
+    def handle(self, handler_input):
+        logger.debug("In returnInfoandAddMedicine")
+        attributes_manager = handler_input.attributes_manager
+        session_attr = attributes_manager.session_attributes
+        
+        medicine = handler_input.request_envelope.request.intent.slots["medicine"].value
+        session_attr["medicine"] = medicine
+        
+        time = handler_input.request_envelope.request.intent.slots["time"].value
+        session_attr["time"] = time
+        
+        """Clear to interact with the database"""
+        
+        speech = f"The medicine reminder {medicine} at {time} has been added."
+        handler_input.response_builder.speak(speech).set_should_end_session(False)
+        return handler_input.response_builder.response
+
+
+"""delete/remove medicine {medicine} at {time}"""
+"""delete/remove medicine "some habit" at "some time" """
+class returnInfoandDeleteMedicine(AbstractRequestHandler):
+    def can_handle(self, handler_input):
+        return is_intent_name("returnInfoandDeleteMedicine")(handler_input)
+    
+    def handle(self, handler_input):
+        logger.debug("In returnInfoandDeleteMedicine")
+        attributes_manager = handler_input.attributes_manager
+        session_attr = attributes_manager.session_attributes
+        
+        medicine = handler_input.request_envelope.request.intent.slots["medicine"].value
+        session_attr["medicine"] = medicine
+        
+        time = handler_input.request_envelope.request.intent.slots["time"].value
+        session_attr["time"] = time
+        
+        """Clear to interact with the database"""
+        
+        speech = f"The medicine reminder {medicine} at {time} has been deleted."
+        handler_input.response_builder.speak(speech).set_should_end_session(False)
+        return handler_input.response_builder.response
 
 
 
@@ -476,6 +542,8 @@ sb.add_request_handler(HealthyHabitRemindersHelp())
 sb.add_request_handler(DeleteHealthyHabit())
 sb.add_request_handler(returnInfoandDeleteHabit())
 sb.add_request_handler(returnInfoandAddHabit())
+sb.add_request_handler(returnInfoandDeleteMedicine())
+sb.add_request_handler(returnInfoandAddMedicine())
 sb.add_request_handler(SaveHealthyHabit())
 sb.add_request_handler(HealthChallengesHelp()) 
 sb.add_request_handler(GuidedBreathingHelp()) 
