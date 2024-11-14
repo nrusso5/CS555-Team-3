@@ -328,7 +328,10 @@ class returnInfoandAddHabit(AbstractRequestHandler):
         habit = handler_input.request_envelope.request.intent.slots["habit"].value
         session_attr["habit"] = habit
         
-        speech = f"The habit {habit} has been added."
+        time = handler_input.request_envelope.request.intent.slots["time"].value
+        session_attr["time"] = time
+        
+        speech = f"The habit {habit} at {time} has been added."
         handler_input.response_builder.speak(speech).set_should_end_session(False)
         return handler_input.response_builder.response
 
@@ -345,7 +348,10 @@ class returnInfoandDeleteHabit(AbstractRequestHandler):
         habit = handler_input.request_envelope.request.intent.slots["habit"].value
         session_attr["habit"] = habit
         
-        speech = f"The habit {habit} has been deleted."
+        time = handler_input.request_envelope.request.intent.slots["time"].value
+        session_attr["time"] = time
+        
+        speech = f"The habit {habit} at {time} has been deleted."
         handler_input.response_builder.speak(speech).set_should_end_session(False)
         return handler_input.response_builder.response
 
