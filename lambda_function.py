@@ -1,9 +1,13 @@
 # -*- coding: utf-8 -*-
+import sys
+import os
+sys.path.append(os.path.dirname(__file__))
 
 import random
 import logging
 import json
 import prompts
+from sql import mySQLdb
 
 from ask_sdk_core.skill_builder import SkillBuilder
 from ask_sdk_core.dispatch_components import (
@@ -16,10 +20,11 @@ from ask_sdk_model.dialog import DelegateDirective
 from ask_sdk_model.ui import SimpleCard
 from ask_sdk_model import Response
 
+
 sb = SkillBuilder()
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
-
+#database = mySQLdb("147.185.221.23:41293", "public", "PassWord21!", "test_db")
 
 # Built-in Intent Handlers
 class GetNewFactHandler(AbstractRequestHandler):
@@ -346,6 +351,14 @@ class returnInfoandAddHabit(AbstractRequestHandler):
         """Clear to interact with the database"""
         session_attr["habit"] = habit
         session_attr["time"] = time
+        try:
+            logger.debug("Connecting to the database")
+            database = mySQLdb("147.185.221.23:41293", "public", "PassWord21!", "test_db")
+            database.insert_health_information("1000", "test")
+            logger.debug("Data inserted successfully")
+        except Exception as e:
+            logger.error(f"Database connection or operation failed: {e}")
+            raise
         
         speech = f"The habit {habit} at {time} has been added."
         handler_input.response_builder.speak(speech).set_should_end_session(False)
@@ -378,6 +391,7 @@ class returnInfoandDeleteHabit(AbstractRequestHandler):
         session_attr["habit"] = habit
         session_attr["time"] = time
         
+
         speech = f"The habit {habit} at {time} has been deleted."
         handler_input.response_builder.speak(speech).set_should_end_session(False)
         return handler_input.response_builder.response
@@ -416,6 +430,15 @@ class returnInfoandAddMedicine(AbstractRequestHandler):
         
         session_attr["time"] = time
         session_attr["medicine"] = medicine
+        
+        try:
+            logger.debug("Connecting to the database")
+            database = mySQLdb("147.185.221.23:41293", "public", "PassWord21!", "test_db")
+            database.insert_health_information("1000", "test")
+            logger.debug("Data inserted successfully")
+        except Exception as e:
+            logger.error(f"Database connection or operation failed: {e}")
+            raise
         
         speech = f"The medicine reminder {medicine} at {time} has been added."
         handler_input.response_builder.speak(speech).set_should_end_session(False)
@@ -700,10 +723,3 @@ help_messages = {
         "For general assistance, say, help me with something else. If you need help with a specific feature, please specify the name of the feature, such as exercise tracking or healthy habit reminders."
     )
 }
-
-
-
-
-
-
-
