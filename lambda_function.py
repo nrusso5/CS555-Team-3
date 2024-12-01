@@ -24,7 +24,6 @@ from ask_sdk_model import Response
 sb = SkillBuilder()
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
-#database = mySQLdb("147.185.221.23:41293", "public", "PassWord21!", "test_db")
 
 # Built-in Intent Handlers
 class GetNewFactHandler(AbstractRequestHandler):
@@ -353,7 +352,7 @@ class returnInfoandAddHabit(AbstractRequestHandler):
         session_attr["time"] = time
         try:
             logger.debug("Connecting to the database")
-            database = mySQLdb("147.185.221.23:41293", "public", "PassWord21!", "test_db")
+            database = mySQLdb("--", "public", "--", "--")
             database.insert_health_information("1000", "test")
             logger.debug("Data inserted successfully")
         except Exception as e:
@@ -433,7 +432,7 @@ class returnInfoandAddMedicine(AbstractRequestHandler):
         
         try:
             logger.debug("Connecting to the database")
-            database = mySQLdb("147.185.221.23:41293", "public", "PassWord21!", "test_db")
+            database = mySQLdb("--", "public", "--", "--")
             database.insert_health_information("1000", "test")
             logger.debug("Data inserted successfully")
         except Exception as e:
