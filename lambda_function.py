@@ -1,9 +1,13 @@
 # -*- coding: utf-8 -*-
+import sys
+import os
+sys.path.append(os.path.dirname(__file__))
 
 import random
 import logging
 import json
 import prompts
+from sql import mySQLdb
 
 from ask_sdk_core.skill_builder import SkillBuilder
 from ask_sdk_core.dispatch_components import (
@@ -16,10 +20,10 @@ from ask_sdk_model.dialog import DelegateDirective
 from ask_sdk_model.ui import SimpleCard
 from ask_sdk_model import Response
 
+
 sb = SkillBuilder()
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
-
 
 # Built-in Intent Handlers
 class GetNewFactHandler(AbstractRequestHandler):
@@ -321,8 +325,8 @@ class SaveHealthyHabit(AbstractRequestHandler):
 """CURRENT VERSION DOES NOT RECORD CONVERSATION HISTORY"""
 """NEED TO IMPLEMENT ERROR HANDLING (I.E. THE NONE MESSAGES)"""
 
-"""add {habit} at {time}"""
-"""add "some habit" at "some time" """
+"""add habit {habit} at {time}"""
+"""add habit "some habit" at "some time" """
 class returnInfoandAddHabit(AbstractRequestHandler):
     def can_handle(self, handler_input):
         return is_intent_name("returnInfoandAddHabit")(handler_input)
@@ -333,20 +337,35 @@ class returnInfoandAddHabit(AbstractRequestHandler):
         session_attr = attributes_manager.session_attributes
         
         habit = handler_input.request_envelope.request.intent.slots["habit"].value
-        session_attr["habit"] = habit
+        
         
         time = handler_input.request_envelope.request.intent.slots["time"].value
-        session_attr["time"] = time
+        
+        if not (handler_input.request_envelope.request.intent.slots["habit"].value or 
+            handler_input.request_envelope.request.intent.slots["time"].value):
+            speech = help_messages["healthy_habit_reminders"]
+            handler_input.response_builder.speak(speech).set_should_end_session(False)
+            return handler_input.response_builder.response
         
         """Clear to interact with the database"""
+        session_attr["habit"] = habit
+        session_attr["time"] = time
+        try:
+            logger.debug("Connecting to the database")
+            database = mySQLdb("--", "public", "--", "--")
+            database.insert_health_information("1000", "test")
+            logger.debug("Data inserted successfully")
+        except Exception as e:
+            logger.error(f"Database connection or operation failed: {e}")
+            raise
         
         speech = f"The habit {habit} at {time} has been added."
         handler_input.response_builder.speak(speech).set_should_end_session(False)
         return handler_input.response_builder.response
 
 
-"""remove/delete {habit} at {time}"""
-"""remove/delete "some habit" at "some time" """
+"""remove/delete habit {habit} at {time}"""
+"""remove/delete habit "some habit" at "some time" """
 class returnInfoandDeleteHabit(AbstractRequestHandler):
     def can_handle(self, handler_input):
         return is_intent_name("returnInfoandDeleteHabit")(handler_input)
@@ -357,13 +376,21 @@ class returnInfoandDeleteHabit(AbstractRequestHandler):
         session_attr = attributes_manager.session_attributes
         
         habit = handler_input.request_envelope.request.intent.slots["habit"].value
-        session_attr["habit"] = habit
+        
         
         time = handler_input.request_envelope.request.intent.slots["time"].value
-        session_attr["time"] = time
+        
+        if not (handler_input.request_envelope.request.intent.slots["habit"].value or 
+            handler_input.request_envelope.request.intent.slots["time"].value):
+            speech = help_messages["healthy_habit_reminders"]
+            handler_input.response_builder.speak(speech).set_should_end_session(False)
+            return handler_input.response_builder.response
         
         """Clear to interact with the database"""
+        session_attr["habit"] = habit
+        session_attr["time"] = time
         
+
         speech = f"The habit {habit} at {time} has been deleted."
         handler_input.response_builder.speak(speech).set_should_end_session(False)
         return handler_input.response_builder.response
@@ -387,12 +414,30 @@ class returnInfoandAddMedicine(AbstractRequestHandler):
         session_attr = attributes_manager.session_attributes
         
         medicine = handler_input.request_envelope.request.intent.slots["medicine"].value
-        session_attr["medicine"] = medicine
+        
         
         time = handler_input.request_envelope.request.intent.slots["time"].value
-        session_attr["time"] = time
+        
+        
+        if not (handler_input.request_envelope.request.intent.slots["medicine"].value or 
+            handler_input.request_envelope.request.intent.slots["time"].value):
+            speech = help_messages["medicine_reminders"]
+            handler_input.response_builder.speak(speech).set_should_end_session(False)
+            return handler_input.response_builder.response
         
         """Clear to interact with the database"""
+        
+        session_attr["time"] = time
+        session_attr["medicine"] = medicine
+        
+        try:
+            logger.debug("Connecting to the database")
+            database = mySQLdb("--", "public", "--", "--")
+            database.insert_health_information("1000", "test")
+            logger.debug("Data inserted successfully")
+        except Exception as e:
+            logger.error(f"Database connection or operation failed: {e}")
+            raise
         
         speech = f"The medicine reminder {medicine} at {time} has been added."
         handler_input.response_builder.speak(speech).set_should_end_session(False)
@@ -401,6 +446,7 @@ class returnInfoandAddMedicine(AbstractRequestHandler):
 
 """delete/remove medicine {medicine} at {time}"""
 """delete/remove medicine "some habit" at "some time" """
+
 class returnInfoandDeleteMedicine(AbstractRequestHandler):
     def can_handle(self, handler_input):
         return is_intent_name("returnInfoandDeleteMedicine")(handler_input)
@@ -411,9 +457,18 @@ class returnInfoandDeleteMedicine(AbstractRequestHandler):
         session_attr = attributes_manager.session_attributes
         
         medicine = handler_input.request_envelope.request.intent.slots["medicine"].value
-        session_attr["medicine"] = medicine
+        
         
         time = handler_input.request_envelope.request.intent.slots["time"].value
+        
+        
+        if not (handler_input.request_envelope.request.intent.slots["medicine"].value or 
+                handler_input.request_envelope.request.intent.slots["time"].value):
+            speech = help_messages["medicine_reminders"]
+            handler_input.response_builder.speak(speech).set_should_end_session(False)
+            return handler_input.response_builder.response
+        
+        session_attr["medicine"] = medicine
         session_attr["time"] = time
         
         """Clear to interact with the database"""
@@ -421,7 +476,6 @@ class returnInfoandDeleteMedicine(AbstractRequestHandler):
         speech = f"The medicine reminder {medicine} at {time} has been deleted."
         handler_input.response_builder.speak(speech).set_should_end_session(False)
         return handler_input.response_builder.response
-
 
 
 
@@ -668,10 +722,3 @@ help_messages = {
         "For general assistance, say, help me with something else. If you need help with a specific feature, please specify the name of the feature, such as exercise tracking or healthy habit reminders."
     )
 }
-
-
-
-
-
-
-

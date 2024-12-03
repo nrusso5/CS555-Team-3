@@ -75,7 +75,7 @@ class mySQLdb:
 
     def execute_sql(self, sql, s1, s2=None):
         self.cursor.execute(sql, (s1, s2))
-        self.conn.commit
+        self.conn.commit()
 
 
     def log_changes(self, user, database, action, time):
