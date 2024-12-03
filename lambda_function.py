@@ -357,7 +357,7 @@ class returnInfoandAddHabit(AbstractRequestHandler):
             logger.debug("Data inserted successfully")
         except Exception as e:
             logger.error(f"Database connection or operation failed: {e}")
-            raise
+            #raise
         
         speech = f"The habit {habit} at {time} has been added."
         handler_input.response_builder.speak(speech).set_should_end_session(False)
@@ -437,7 +437,7 @@ class returnInfoandAddMedicine(AbstractRequestHandler):
             logger.debug("Data inserted successfully")
         except Exception as e:
             logger.error(f"Database connection or operation failed: {e}")
-            raise
+            #raise
         
         speech = f"The medicine reminder {medicine} at {time} has been added."
         handler_input.response_builder.speak(speech).set_should_end_session(False)
