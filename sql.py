@@ -71,7 +71,17 @@ class mySQLdb:
         id = results[0][0]
         comments = self.decrypt_data(results[0][1])
         return id, comments
-        
+    
+
+    #Adding edit contact info doesn't seem necessary as its not being used.
+    def edit_health_information(self, id, comments):
+        """
+        Update health information with userID
+        """
+        comments = self.encrypt_data(comments)
+        sql = "UPDATE health_information SET comments = %s WHERE ID = %s"
+        self.execute_sql(sql, comments, id)
+    
 
     def execute_sql(self, sql, s1, s2=None):
         self.cursor.execute(sql, (s1, s2))

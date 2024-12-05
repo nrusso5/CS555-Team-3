@@ -26,6 +26,9 @@ class testMySQLDatabase(unittest.TestCase):
         self.database.insert_health_information("999", "Comments for patient with this ID.")
         test21 = self.database.fetch_health_information_by_id(999)
         self.assertEqual(test21, (999, "Comments for patient with this ID."))
+        self.database.edit_health_information("999", "different comments for patient with this ID")
+        test21 = self.database.fetch_health_information_by_id(999)
+        self.assertEqual(test21, (999, "different comments for patient with this ID"))
 
     def testEncryptionAndDecryption(self):
         encrypted_name = self.database.encrypt_data("John Doe")
@@ -33,6 +36,11 @@ class testMySQLDatabase(unittest.TestCase):
         decrypted_name = self.database.decrypt_data(encrypted_name)
         self.assertEqual(decrypted_name, "John Doe")
 
+    # def testEditHealthInformation(self):
+    #     #self.database.insert_health_information("999", "Comments for patient with this ID.")
+    #     self.database.edit_health_information("999", "different comments for patient with this ID")
+    #     test21 = self.database.fetch_health_information_by_id(999)
+    #     self.assertEqual(test21, (999, "different comments for patient with this ID"))
 
 if __name__ == '__main__':
     unittest.main()
