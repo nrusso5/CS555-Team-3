@@ -6,6 +6,6 @@
         "FALLBACK_MESSAGE": "Sorry, I cannot understand that. Say, vital link help, if you need help with vital link.",
         "FALLBACK_REPROMPT": "What can I help you with?",
         "ERROR_MESSAGE": "Sorry, an error occurred.",
-        "STOP_MESSAGE": "Goodbye!"
+        "STOP_MESSAGE": "Goodbye! Say open vital link to re open."
     }
 }
