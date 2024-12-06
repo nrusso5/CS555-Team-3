@@ -11,7 +11,7 @@ class testMySQLDatabase(unittest.TestCase):
         database_name = input("Enter the name of the database to connect to: ")
         
         # Establish a connection to the database
-        cls.database = mySQLdb(host, user, password, database_name, b'--=')
+        cls.database = mySQLdb(host, user, password, database_name, b'qT0m81JmnJRckFq1Z0lUiBOTEW5DvRfFfz6hJPXlp3I=')
 
     def testInsertAndFetchContact(self):
         self.database.insert_contact_info("John Doe", "9009009999")
@@ -27,25 +27,45 @@ class testMySQLDatabase(unittest.TestCase):
         test11 = self.database.fetch_health_information_by_id(999)
         self.assertEqual(test11, (999, ","))
 
-        self.database.edit_health_information("999", "comments for patient with this ID", 0)
+        self.database.edit_health_information("999", "comments for patient with this ID", 0, 0)
         test21 = self.database.fetch_health_information_by_id(999)
         self.assertEqual(test21, (999, "comments for patient with this ID,"))
 
-        self.database.edit_health_information("999", "different comments for patient with this ID", 0)
+        self.database.edit_health_information("999", "different comments for patient with this ID", 0, 0)
         test21 = self.database.fetch_health_information_by_id(999)
-        self.assertEqual(test21, (999, "different comments for patient with this ID,"))
+        self.assertEqual(test21, (999, "comments for patient with this ID;different comments for patient with this ID,"))
         
         self.database.create_user("998")
         test11 = self.database.fetch_health_information_by_id(998)
         self.assertEqual(test11, (998, ","))
 
-        self.database.edit_health_information("998", "comments for patient with this ID", 1)
+        self.database.edit_health_information("998", "comments for patient with this ID", 1, 0)
         test11 = self.database.fetch_health_information_by_id("998")
         self.assertEqual(test11, (998, ",comments for patient with this ID"))
 
-        self.database.edit_health_information("999", "Comments in index 1", 1)
+        self.database.edit_health_information("999", "Comments in index 1", 1, 0)
         test11 = self.database.fetch_health_information_by_id("999")
-        self.assertEqual(test11, (999, "different comments for patient with this ID,Comments in index 1"))
+        self.assertEqual(test11, (999, "comments for patient with this ID;different comments for patient with this ID,Comments in index 1"))
+
+        self.database.edit_health_information("999", "more index 1", 1, 0)
+        test11 = self.database.fetch_health_information_by_id("999")
+        self.assertEqual(test11, (999, "comments for patient with this ID;different comments for patient with this ID,Comments in index 1;more index 1"))
+
+        self.database.edit_health_information("999", "Comments in index 1", 1, 1)
+        test11 = self.database.fetch_health_information_by_id("999")
+        self.assertEqual(test11, (999, "comments for patient with this ID;different comments for patient with this ID,more index 1"))
+
+        self.database.edit_health_information("999", "comments for patient with this ID", 0, 1)
+        test11 = self.database.fetch_health_information_by_id("999")
+        self.assertEqual(test11, (999, "different comments for patient with this ID,more index 1"))
+
+        self.database.edit_health_information("999", "different comments for patient with this ID", 0, 1)
+        test11 = self.database.fetch_health_information_by_id("999")
+        self.assertEqual(test11, (999, ",more index 1"))
+
+        self.database.edit_health_information("999", "more index 1", 1, 1)
+        test11 = self.database.fetch_health_information_by_id("999")
+        self.assertEqual(test11, (999, ","))
 
         self.database.create_user("1000")
 
@@ -54,7 +74,7 @@ class testMySQLDatabase(unittest.TestCase):
         self.assertNotEqual(encrypted_name, "John Doe")
         decrypted_name = self.database.decrypt_data(encrypted_name)
         self.assertEqual(decrypted_name, "John Doe")
-
+        
 
 if __name__ == '__main__':
     unittest.main()

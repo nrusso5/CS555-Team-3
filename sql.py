@@ -71,7 +71,7 @@ class mySQLdb:
     #Adding edit contact info doesn't seem necessary as its not being used.
     #Changed to assume userid is created by default. this will be the default write function. 
     #structure: time-medicine,time-habit
-    def edit_health_information(self, id, comments, reminderType: bool):
+    def edit_health_information(self, id, comments, reminderType: bool, removing: bool):
         """
         Update health information with userID
         reminderType: 0->medicine reminder. 1-> healthy habit
@@ -80,11 +80,24 @@ class mySQLdb:
         prior = self.fetch_health_information_by_id(id)
         prior = prior[1]
         prior = prior.split(',')
-        if (not reminderType):
-            comments += "," + prior[1]
-        else:
-            comments = prior[0] + "," + comments
-
+        if (not reminderType and not removing):
+            if (prior[0] == ""):
+                comments += "," + prior[1]
+            else:
+                comments = prior[0] + ";" + comments + "," + prior[1]
+        elif(reminderType and not removing):
+            if (prior[1] == ""):
+                comments = prior[0] + "," + comments
+            else:
+                comments = prior[0] + "," + prior[1] + ";" + comments
+        elif (not reminderType and removing):
+            objects = prior[0].split(";")
+            filter = [obj for obj in objects if obj != comments]#here comments is the item to remove. 
+            comments = ";".join(filter) + "," + prior[1]
+        elif(reminderType and removing):
+            objects = prior[1].split(";")
+            filter = [obj for obj in objects if obj != comments]
+            comments = prior[0] + "," + ";".join(filter)
         comments = self.encrypt_data(comments)
         sql = "UPDATE health_information SET comments = %s WHERE ID = %s"
         self.execute_sql(sql, comments, id)
