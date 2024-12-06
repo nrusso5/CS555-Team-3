@@ -25,6 +25,8 @@ sb = SkillBuilder()
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
+
+
 # Built-in Intent Handlers
 class GetNewFactHandler(AbstractRequestHandler):
     """Handler for Skill Launch and GetNewFact Intent."""
@@ -352,8 +354,8 @@ class returnInfoandAddHabit(AbstractRequestHandler):
         session_attr["time"] = time
         try:
             logger.debug("Connecting to the database")
-            database = mySQLdb("--", "public", "--", "--")
-            database.insert_health_information("1000", "test")
+            database = mySQLdb("--", "--", "--!", "--", b'--=')
+            database.edit_health_information("1000", str(time) + "-" + str(habit), 1)
             logger.debug("Data inserted successfully")
         except Exception as e:
             logger.error(f"Database connection or operation failed: {e}")
@@ -432,8 +434,8 @@ class returnInfoandAddMedicine(AbstractRequestHandler):
         
         try:
             logger.debug("Connecting to the database")
-            database = mySQLdb("--", "public", "--", "--")
-            database.insert_health_information("1000", "test")
+            database = mySQLdb("--", "--", "--!", "--", b'--=')
+            database.edit_health_information("1000", str(time) + "-" + str(medicine), 0)
             logger.debug("Data inserted successfully")
         except Exception as e:
             logger.error(f"Database connection or operation failed: {e}")
