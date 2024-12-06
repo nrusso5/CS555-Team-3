@@ -1,15 +1,15 @@
 Current Slot Types:
   AMAZON.TIME
 		Use Case:
-		-	BUILT IN
+		- BUILT IN
 		Slots Using:
-		-	returnInfoandDeleteHabit
+		- returnInfoandDeleteHabit
 		- returnInfoandAddHabit
 		- returnInfoandDeleteMedicine
 		- returnInfoandAddMedicine
   exercise
 		Use Case:
-		-	walking
+		- walking
 		- running
 		- yoga
 		- etc.
@@ -24,7 +24,7 @@ Current Slot Types:
 		Slots Using:
   habit
 		Use Case:
-		-	go to the gym
+		- go to the gym
 		- do breathing exercise
 		- drink water
 		- stand
@@ -33,8 +33,6 @@ Current Slot Types:
 		Slots Using:
   medicine
   	Use Case:
-		- pain killers
-		- iron supplements
 		- aspirin
 		- tylenol
 		- liquids
