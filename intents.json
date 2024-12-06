@@ -1,0 +1,519 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "vital link",
+            "intents": [
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.FallbackIntent",
+                    "samples": []
+                },
+                {
+                    "name": "GetNewFactIntent",
+                    "slots": [],
+                    "samples": [
+                        "a fact"
+                    ]
+                },
+                {
+                    "name": "AMAZON.NavigateHomeIntent",
+                    "samples": []
+                },
+                {
+                    "name": "VitalLinkHelpIntent",
+                    "slots": [],
+                    "samples": [
+                        "tell me about vital link features",
+                        "help me with vital link",
+                        "how do i use vital link",
+                        "vital link features",
+                        "how does vital link work",
+                        "vital link help",
+                        "what can vital link do"
+                    ]
+                },
+                {
+                    "name": "VitalLinkHelpIntent_Other",
+                    "slots": [],
+                    "samples": [
+                        "general help",
+                        "help with more",
+                        "help with other",
+                        "other help ",
+                        "help me other",
+                        "help other"
+                    ]
+                },
+                {
+                    "name": "VitalLinkHelpIntent_ExerciseTracking",
+                    "slots": [],
+                    "samples": [
+                        "how do I use exercise tracking",
+                        "how do I use exercise tracker",
+                        "how do I use the exercise tracker",
+                        "help exercise tracking",
+                        "help me exercise tracking",
+                        "help me with the exercise tracker",
+                        "exercise help",
+                        "help me with exercise tracker",
+                        "helo me exercise tracker",
+                        "help me exercise tracker",
+                        "exercise tracking help",
+                        "help with exercise",
+                        "help with exercise tracker",
+                        "exercise tracker help",
+                        "help with exercise tracking"
+                    ]
+                },
+                {
+                    "name": "VitalLinkHelpIntent_HealthyHabitReminders",
+                    "slots": [],
+                    "samples": [
+                        "guide me through habit management",
+                        "how can I manage my habits",
+                        "show me the habit system",
+                        "explain habit reminders to me",
+                        "what features do habits have",
+                        "teach me about habit tracking",
+                        "open habit instructions",
+                        "habit system tutorial",
+                        "habit reminder overview",
+                        "I'm confused about habits",
+                        "how does habit tracking work",
+                        "what are my habit options",
+                        "give me habit information",
+                        "help with habit management",
+                        "demonstrate habit features",
+                        "start habit tutorial",
+                        "habit system guide",
+                        "what can habits do",
+                        "explain habit tracking",
+                        "habit reminder walkthrough",
+                        "habit system overview",
+                        "describe habit features"
+                    ]
+                },
+                {
+                    "name": "VitalLinkHelpIntent_MedicineReminders",
+                    "slots": [],
+                    "samples": [
+                        "help medicines reminders",
+                        "help medicines reminder",
+                        "help me medicines",
+                        "help me medicines reminders",
+                        "help me with medicines reminders",
+                        "help me with medicines reminder",
+                        "medicine help",
+                        "help me with medicine reminder",
+                        "helo me medicine reminder",
+                        "help me with medicine reminders",
+                        "help me medicine reminders",
+                        "help me medicine",
+                        "medicine reminder help",
+                        "help with medicine",
+                        "help with medicine reminder",
+                        "medicine reminders help",
+                        "help medicine reminders",
+                        "help with medicine reminders"
+                    ]
+                },
+                {
+                    "name": "VitalLinkHelpIntent_HealthChallenges",
+                    "slots": [],
+                    "samples": [
+                        "list health challenges",
+                        "health challenges",
+                        "healthy challenges",
+                        "healthy challenge",
+                        "health challenge",
+                        "what health challenges",
+                        "what healthy challenges",
+                        "what health challenges can I do",
+                        "what healthy challenges can I do",
+                        "what health challenges are there",
+                        "what healthy challenges are there",
+                        "what health challenges do you have",
+                        "what healthy challenges do you have",
+                        "do healthy challenges",
+                        "use healthy challenges",
+                        "use health challenges",
+                        "do health challenges"
+                    ]
+                },
+                {
+                    "name": "VitalLinkHelpIntent_GuidedBreathing",
+                    "slots": [],
+                    "samples": [
+                        "how do i start guided breathing",
+                        "help guided breathing",
+                        "help breathing",
+                        "help guided breathing exercises",
+                        "help guided breathing exercise",
+                        "help guided breathing exercising",
+                        "help breathing exercises",
+                        "help breathing exercise",
+                        "help breathing exercising",
+                        "help with guided breathing",
+                        "help with breathing",
+                        "help with guided breathing exercises",
+                        "help with guided breathing exercise",
+                        "help with guided breathing exercising",
+                        "help with breathing exercises",
+                        "help with breathing exercise",
+                        "help with breathing exercising",
+                        "guided breathing help",
+                        "breathing help",
+                        "guided breathing exercises help",
+                        "guided breathing exercise help",
+                        "guided breathing exercising help",
+                        "breathing exercises help",
+                        "breathing exercise help",
+                        "breathing exercising help",
+                        "help me guided breathing",
+                        "help me breathing",
+                        "help me guided breathing exercises",
+                        "help me guided breathing exercising",
+                        "help me guided breathing exercise",
+                        "help me breathing exercises",
+                        "help me breathing exercise",
+                        "help me breathing exercising"
+                    ]
+                },
+                {
+                    "name": "Breathing_Cooldown",
+                    "slots": [],
+                    "samples": [
+                        "im done working out",
+                        "the cool down breathe",
+                        "the cooldown breathe",
+                        "the cool down breathing exercise",
+                        "the cooldown breathing exercise",
+                        "the cooldown breathing",
+                        "the cool down breathing",
+                        "cool down breathe exercise",
+                        "cooldown breathe exercise",
+                        "cool down breathing exercise",
+                        "cooldown breathing exercise",
+                        "cool down breathe",
+                        "cooldown breathe",
+                        "cool down breathing",
+                        "cooldown breathing"
+                    ]
+                },
+                {
+                    "name": "Breathing_Relaxing",
+                    "slots": [],
+                    "samples": [
+                        "Help me relieve some stress",
+                        "stress relief routine",
+                        "destress breathing",
+                        "the relaxing breathe",
+                        "the relaxation breathe",
+                        "the relaxing breathing exercise",
+                        "the relaxation breathing exercise",
+                        "the relaxation breathing",
+                        "the relaxing breathing",
+                        "relaxing breathe exercise",
+                        "relaxation breathe exercise",
+                        "relaxing breathing exercise",
+                        "relaxation breathing exercise",
+                        "relaxing breathe",
+                        "relaxation breathe",
+                        "relaxing breathing",
+                        "relaxation breathing",
+                        "the relax breathe",
+                        "the relax breathing exercise",
+                        "the relax breathing",
+                        "relax breathe exercise",
+                        "relax breathing exercise",
+                        "relax breathe",
+                        "relax breathing"
+                    ]
+                },
+                {
+                    "name": "SaveHealthyHabit",
+                    "slots": [],
+                    "samples": [
+                        "create a new habit for me",
+                        "add a daily habit to my list",
+                        "set up a habit reminder",
+                        "schedule a new habit",
+                        "create a recurring habit",
+                        "establish a new habit reminder",
+                        "I want to start a new habit",
+                        "help me create a habit",
+                        "I need to set up a habit reminder",
+                        "register a new habit for me",
+                        "add healthy habit"
+                    ]
+                },
+                {
+                    "name": "DeleteHealthyHabit",
+                    "slots": [],
+                    "samples": [
+                        "remove a habit from my list",
+                        "stop tracking a habit",
+                        "discontinue my habit reminder",
+                        "cancel my habit tracking",
+                        "end a habit reminder",
+                        "eliminate a habit from tracking",
+                        "clear a habit reminder",
+                        "terminate habit tracking",
+                        "erase a habit reminder",
+                        "take away a habit reminder"
+                    ]
+                },
+                {
+                    "name": "returnInfoandDeleteHabit",
+                    "slots": [
+                        {
+                            "name": "habit",
+                            "type": "habit"
+                        },
+                        {
+                            "name": "time",
+                            "type": "AMAZON.TIME"
+                        }
+                    ],
+                    "samples": [
+                        "remove habit reminder {habit} at {time}",
+                        "delete habit reminder {habit} at {time}",
+                        "delete habit {habit} at {time}",
+                        "remove habit {habit} at {time}"
+                    ]
+                },
+                {
+                    "name": "returnInfoandAddHabit",
+                    "slots": [
+                        {
+                            "name": "habit",
+                            "type": "habit"
+                        },
+                        {
+                            "name": "time",
+                            "type": "AMAZON.TIME"
+                        }
+                    ],
+                    "samples": [
+                        "add habit reminder {habit} at {time}",
+                        "add habit {habit} at {time}"
+                    ]
+                },
+                {
+                    "name": "returnInfoandDeleteMedicine",
+                    "slots": [
+                        {
+                            "name": "medicine",
+                            "type": "medicine"
+                        },
+                        {
+                            "name": "time",
+                            "type": "AMAZON.TIME"
+                        }
+                    ],
+                    "samples": [
+                        "remove medicine reminder {medicine} at {time}",
+                        "delete medicine reminder {medicine} at {time}",
+                        "delete medicine {medicine} at {time}",
+                        "remove medicine {medicine} at {time}"
+                    ]
+                },
+                {
+                    "name": "returnInfoandAddMedicine",
+                    "slots": [
+                        {
+                            "name": "medicine",
+                            "type": "medicine"
+                        },
+                        {
+                            "name": "time",
+                            "type": "AMAZON.TIME"
+                        }
+                    ],
+                    "samples": [
+                        "add medicine reminder {medicine} at {time}",
+                        "add medicine {medicine} at {time}"
+                    ]
+                },
+                {
+                    "name": "returnInfoAndAddExerciseChallenge",
+                    "slots": [
+                        {
+                            "name": "exercise",
+                            "type": "exercise"
+                        },
+                        {
+                            "name": "goal",
+                            "type": "goal"
+                        }
+                    ],
+                    "samples": [
+                        "add exercise challenge {exercise} for {goal}"
+                    ]
+                },
+                {
+                    "name": "returnInfoAndChangeExerciseChallenge",
+                    "slots": [
+                        {
+                            "name": "goal",
+                            "type": "goal"
+                        }
+                    ],
+                    "samples": [
+                        "change goal to {goal}"
+                    ]
+                },
+                {
+                    "name": "returnInfoAndProgressExerciseChallenge",
+                    "slots": [
+                        {
+                            "name": "progress",
+                            "type": "progress"
+                        }
+                    ],
+                    "samples": [
+                        "progress by {progress}"
+                    ]
+                }
+            ],
+            "types": [
+                {
+                    "name": "habit",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "go to the gym"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "do breathing exercise"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "drink water"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "stand"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "run"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "walk"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "medicine",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "pain killers"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "iron supplements"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "aspirin"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "tylenol"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "liquids"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "injections"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "topical"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "tablets"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "pills"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "exercise",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "walking"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "goal",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "40 minutes"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "10 minutes"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "60 minutes"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "progress",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "30 minutes"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}
