@@ -23,12 +23,29 @@ class testMySQLDatabase(unittest.TestCase):
         self.assertEqual(test11, ("Jane Doe", "900900900"))
 
     def testInsertAndFetchHealth(self):
-        self.database.insert_health_information("999", "Comments for patient with this ID.")
+        self.database.create_user("999")
+        test11 = self.database.fetch_health_information_by_id(999)
+        self.assertEqual(test11, (999, ","))
+
+        self.database.edit_health_information("999", "comments for patient with this ID", 0)
         test21 = self.database.fetch_health_information_by_id(999)
-        self.assertEqual(test21, (999, "Comments for patient with this ID."))
-        self.database.edit_health_information("999", "different comments for patient with this ID")
+        self.assertEqual(test21, (999, "comments for patient with this ID,"))
+
+        self.database.edit_health_information("999", "different comments for patient with this ID", 0)
         test21 = self.database.fetch_health_information_by_id(999)
-        self.assertEqual(test21, (999, "different comments for patient with this ID"))
+        self.assertEqual(test21, (999, "different comments for patient with this ID,"))
+        
+        self.database.create_user("998")
+        test11 = self.database.fetch_health_information_by_id(998)
+        self.assertEqual(test11, (998, ","))
+
+        self.database.edit_health_information("998", "comments for patient with this ID", 1)
+        test11 = self.database.fetch_health_information_by_id("998")
+        self.assertEqual(test11, (998, ",comments for patient with this ID"))
+
+        self.database.edit_health_information("999", "Comments in index 1", 1)
+        test11 = self.database.fetch_health_information_by_id("999")
+        self.assertEqual(test11, (999, "different comments for patient with this ID,Comments in index 1"))
 
     def testEncryptionAndDecryption(self):
         encrypted_name = self.database.encrypt_data("John Doe")

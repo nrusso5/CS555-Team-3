@@ -18,7 +18,10 @@ class mySQLdb:
         self.cipher = Fernet(self.key)
         self.cursor = self.conn.cursor()
 
-
+    def create_user(self, id):
+        sql = "INSERT INTO health_information (id, comments) VALUES (%s, %s)"
+        self.execute_sql(sql, id, self.encrypt_data(","))
+    
     def encrypt_data(self, data):
         return self.cipher.encrypt(data.encode())
 
@@ -40,19 +43,20 @@ class mySQLdb:
         self.execute_sql(sql, full_name, phone_number)
 
 
-    def insert_health_information(self, id, comments):
-        """
-        Send health information into mysql database
-        """
-        comments = self.encrypt_data(comments)
-        sql = "INSERT INTO health_information (id, comments) VALUES (%s, %s)"
-        self.execute_sql(sql, id, comments)
+    # def insert_health_information(self, id, comments):
+    #     """
+    #     Send health information into mysql database
+    #     """
+    #     comments = self.encrypt_data(comments)
+    #     sql = "INSERT INTO health_information (id, comments) VALUES (%s, %s)"
+    #     self.execute_sql(sql, id, comments)
 
 
     def fetch_contact_by_id(self, id):
         """
         Fetch contact information by userID
         """
+
         sql = "SELECT * FROM contact_information WHERE ID = %s"
         self.cursor.execute(sql, (id,))
         results = self.cursor.fetchall()
@@ -65,6 +69,7 @@ class mySQLdb:
         """
         Fetch health information by userID 
         """
+
         sql = "SELECT * FROM health_information WHERE ID = %s"
         self.cursor.execute(sql, (id,))
         results = self.cursor.fetchall()
@@ -74,10 +79,21 @@ class mySQLdb:
     
 
     #Adding edit contact info doesn't seem necessary as its not being used.
-    def edit_health_information(self, id, comments):
+    #Changed to assume userid is created by default. this will be the default write function. 
+    #structure: medicine,habit
+    def edit_health_information(self, id, comments, reminderType: bool):
         """
         Update health information with userID
         """
+
+        prior = self.fetch_health_information_by_id(id)
+        prior = prior[1]
+        prior = prior.split(',')
+        if (not reminderType):
+            comments += "," + prior[1]
+        else:
+            comments = prior[0] + "," + comments
+
         comments = self.encrypt_data(comments)
         sql = "UPDATE health_information SET comments = %s WHERE ID = %s"
         self.execute_sql(sql, comments, id)
