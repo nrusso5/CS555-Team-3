@@ -241,6 +241,115 @@ class MedicineRemindersHelp(AbstractRequestHandler):
         return handler_input.response_builder.response
 
 
+"""add exercise challenge {exercise} for {goal}"""
+
+
+class returnInfoAndAddExerciseChallenge(AbstractRequestHandler):
+    def can_handle(self, handler_input):
+        return is_intent_name("returnInfoAndAddExerciseChallenge")(handler_input)
+
+    def handle(self, handler_input):
+        logger.debug("In returnInfoAndAddExercisseChallenge")
+        attributes_manager = handler_input.attributes_manager
+        session_attr = attributes_manager.session_attributes
+
+        exercise = handler_input.request_envelope.request.intent.slots["exercise"].value
+
+        goal = handler_input.request_envelope.request.intent.slots["goal"].value
+
+        if not (
+            handler_input.request_envelope.request.intent.slots["exercise"].value
+            or handler_input.request_envelope.request.intent.slots["goal"].value):
+            speech = help_messages["health_challenges"]
+            handler_input.response_builder.speak(speech).set_should_end_session(False)
+            return handler_input.response_builder.response
+
+        """Clear to interact with the database"""
+        session_attr["exercise"] = exercise
+        session_attr["goal"] = goal
+        #session_attr["progress"] = 0
+        # try:
+        #     logger.debug("Connecting to the database")
+        #     database = mySQLdb("--", "public", "--", "--")
+        #     database.insert_health_information("1000", "test")
+        #     logger.debug("Data inserted successfully")
+        # except Exception as e:
+        #     logger.error(f"Database connection or operation failed: {e}")
+        #     # raise
+
+        speech = f"The exercise challenge {exercise} with goal {goal} has been added."
+        handler_input.response_builder.speak(speech).set_should_end_session(False)
+        return handler_input.response_builder.response
+
+
+"""change goal to {goal} minutes"""
+
+
+class returnInfoAndChangeExerciseChallenge(AbstractRequestHandler):
+    def can_handle(self, handler_input):
+        return is_intent_name("returnInfoAndChangeExerciseChallenge")(handler_input)
+
+    def handle(self, handler_input):
+        logger.debug("In returnInfoAndChangeExercisseChallenge")
+        attributes_manager = handler_input.attributes_manager
+        session_attr = attributes_manager.session_attributes
+
+        goal = handler_input.request_envelope.request.intent.slots["goal"].value
+
+        if not (handler_input.request_envelope.request.intent.slots["goal"].value):
+            speech = help_messages["health_challenges"]
+            handler_input.response_builder.speak(speech).set_should_end_session(False)
+            return handler_input.response_builder.response
+
+        """Clear to interact with the database"""
+        session_attr["goal"] = goal
+        # try:
+        #     logger.debug("Connecting to the database")
+        #     database = mySQLdb("--", "public", "--", "--")
+        #     database.insert_health_information("1000", "test")
+        #     logger.debug("Data inserted successfully")
+        # except Exception as e:
+        #     logger.error(f"Database connection or operation failed: {e}")
+        #     # raise
+
+        speech = f"The goal has been changed."
+        handler_input.response_builder.speak(speech).set_should_end_session(False)
+        return handler_input.response_builder.response
+
+
+"""Progress by {progress} minutes"""
+
+
+class returnInfoAndProgressExerciseChallenge(AbstractRequestHandler):
+    def can_handle(self, handler_input):
+        return is_intent_name("returnInfoAndProgressExerciseChallenge")(handler_input)
+
+    def handle(self, handler_input):
+        logger.debug("In returnInfoAndProgressExercisseChallenge")
+        attributes_manager = handler_input.attributes_manager
+        session_attr = attributes_manager.session_attributes
+
+        progress = handler_input.request_envelope.request.intent.slots["progress"].value
+
+        if not (handler_input.request_envelope.request.intent.slots["progress"].value):
+            speech = help_messages["health_challenges"]
+            handler_input.response_builder.speak(speech).set_should_end_session(False)
+            return handler_input.response_builder.response
+
+        """Clear to interact with the database"""
+        session_attr["progress"] = progress
+        # try:
+        #     logger.debug("Connecting to the database")
+        #     database = mySQLdb("--", "public", "--", "--")
+        #     database.insert_health_information("1000", "test")
+        #     logger.debug("Data inserted successfully")
+        # except Exception as e:
+        #     logger.error(f"Database connection or operation failed: {e}")
+        #     # raise
+
+        speech = f"Updated your progress by {progress}."
+        handler_input.response_builder.speak(speech).set_should_end_session(False)
+        return handler_input.response_builder.response
 
 class ExerciseTrackingHelp(AbstractRequestHandler):
     """Handler for VitalLinkHelpIntent_ExerciseTracking."""
@@ -354,7 +463,7 @@ class returnInfoandAddHabit(AbstractRequestHandler):
         session_attr["time"] = time
         try:
             logger.debug("Connecting to the database")
-            database = mySQLdb("--", "--", "--!", "--", b'--=')
+            database = mySQLdb("147.185.221.23:41293", "public", "PassWord21!", "test_db", b'qT0m81JmnJRckFq1Z0lUiBOTEW5DvRfFfz6hJPXlp3I=')
             database.edit_health_information("1000", str(time) + "-" + str(habit), 1, 0)
             logger.debug("Data inserted successfully")
         except Exception as e:
@@ -391,21 +500,17 @@ class returnInfoandDeleteHabit(AbstractRequestHandler):
         """Clear to interact with the database"""
         session_attr["habit"] = habit
         session_attr["time"] = time
-        exist = True
-        try:
-            logger.debug("Connecting to the database")
-            database = mySQLdb("--", "--", "--!", "--", b'--=')
-            database.edit_health_information("1000", str(time) + "-" + str(habit), 1, 1)
-            logger.debug("Data inserted successfully")
-        except Exception as e:
-            logger.error(f"Database connection or operation failed: {e}")
-            exist = False
+        #exist = True
+        #speech = f"The habit {habit} at {time} has been deleted."
+            #exist = False
             #raise
             
-        if (exist):
-            speech = f"The habit {habit} at {time} has been deleted."
-        else:
-            speech = f"There doesn't seem to be a reminder for the habit {habit} at {time}"
+        # if (exist):
+        #     speech = f"The habit {habit} at {time} has been deleted."
+        # else:
+        #     speech = f"There doesn't seem to be a reminder for the habit {habit} at {time}"
+        
+        speech = f"The habit {habit} at {time} has been deleted."
         handler_input.response_builder.speak(speech).set_should_end_session(False)
         return handler_input.response_builder.response
 
@@ -444,7 +549,7 @@ class returnInfoandAddMedicine(AbstractRequestHandler):
         
         try:
             logger.debug("Connecting to the database")
-            database = mySQLdb("--", "--", "--!", "--", b'--=')
+            database = mySQLdb("147.185.221.23:41293", "public", "PassWord21!", "test_db", b'qT0m81JmnJRckFq1Z0lUiBOTEW5DvRfFfz6hJPXlp3I=')
             database.edit_health_information("1000", str(time) + "-" + str(medicine), 0, 0)
             logger.debug("Data inserted successfully")
         except Exception as e:
@@ -483,21 +588,15 @@ class returnInfoandDeleteMedicine(AbstractRequestHandler):
         session_attr["medicine"] = medicine
         session_attr["time"] = time
         
-        exist = True
-        try:
-            logger.debug("Connecting to the database")
-            database = mySQLdb("--", "--", "--!", "--", b'--=')
-            database.edit_health_information("1000", str(time) + "-" + str(medicine), 0, 1)
-            logger.debug("Data inserted successfully")
-        except Exception as e:
-            logger.error(f"Database connection or operation failed: {e}")
-            exist = False
+        #exist = True
+        #speech = f"The habit {habit} at {time} has been deleted."
+            #exist = False
             #raise
-        if (exist):
-            speech = f"The medicine reminder {medicine} at {time} has been deleted."
-        else:
-            speech = f"There doesn't seem to be a medicine reminder for {medicine} at {time}"
-            
+        # if (exist):
+        #     speech = f"The medicine reminder {medicine} at {time} has been deleted."
+        # else:
+        #     speech = f"There doesn't seem to be a medicine reminder for {medicine} at {time}"
+        speech = f"The medicine reminder {medicine} at {time} has been deleted."
         handler_input.response_builder.speak(speech).set_should_end_session(False)
         return handler_input.response_builder.response
 
@@ -540,7 +639,6 @@ class GuidedBreathingHelp(AbstractRequestHandler):
         # Respond with the help message
         handler_input.response_builder.speak(help_message).ask(help_message)
         return handler_input.response_builder.response
-
 
 
 class VitalLinkOtherHelp(AbstractRequestHandler):
@@ -615,6 +713,9 @@ sb.add_request_handler(FallbackIntentHandler())
 sb.add_request_handler(SessionEndedRequestHandler())
 sb.add_request_handler(VitalLinkGeneralHelp()) 
 sb.add_request_handler(MedicineRemindersHelp()) 
+sb.add_request_handler(returnInfoAndAddExerciseChallenge())
+sb.add_request_handler(returnInfoAndChangeExerciseChallenge())
+sb.add_request_handler(returnInfoAndProgressExerciseChallenge())
 sb.add_request_handler(ExerciseTrackingHelp()) 
 sb.add_request_handler(HealthyHabitRemindersHelp()) 
 sb.add_request_handler(DeleteHealthyHabit())
@@ -725,16 +826,16 @@ breathing_messages = {
 #Dictionary to store the help messages
 help_messages = {
     "general": (
-        "Say, help with, then the name of the feature. Features include medicine reminders, healthy habit reminders, health challenges, exercise tracking, guided breathing exercises, or other."
+        "Say, help with, then the name of the feature. Features include medicine reminders, healthy habit reminders, exercise tracking, guided breathing exercises, or other."
     ),
     "medicine_reminders": (
-        "To delete a medicine reminder, say, delete medicine reminder, then say the name of the medicine reminder to delete. To add a new medicine reminder, say, add medicine reminder, then say the name of the medicine to be reminded about, then say the hour to be reminded at, then say whether the hour is A.M. or P.M."
+        "To add a new medicine reminder, say, add medicine reminder, then say the name of the medicine to be reminded about, then say what time the reminder is for. To delete a medicine reminder, say, delete medicine reminder, then say the name of the medicine reminder to delete. "
     ),
     "exercise_tracking": (
-        "To track your exercise, say, log exercise, then specify the type of exercise, duration, and intensity level. To check your logged exercises, say, check my exercise log. To delete an exercise entry, say, delete exercise, then specify which entry to remove."
+        "To begin an exercise challenge, say, add exercise challenge, then say the type of exercise and the duration of the challenge. To add progress towards the challenge goal, say, progress by, then how much progress you made. To change the goal, say, change goal, then specify the new goal."
     ),
     "healthy_habit_reminders": (
-        "To delete a healthy habit reminder, say, delete healthy habit reminder, then specify the habit reminder to delete. To add a new healthy habit reminder, say, add healthy habit reminder, then name the habit and specify the time and whether it's A.M. or P.M."
+        "To add a new healthy habit reminder, say, add healthy habit reminder, then name the habit, then say what time the reminder is for. To delete a healthy habit reminder, say, delete healthy habit reminder, then specify the habit reminder to delete. "
     ),
     "health_challenges": (
         "To view available health challenges, say, list health challenges. To join a challenge, say, join health challenge, then mention the challenge name. To check your progress in a challenge, say, check my challenge progress."
