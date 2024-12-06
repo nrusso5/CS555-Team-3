@@ -76,8 +76,12 @@ class mySQLdb:
         Update health information with userID
         reminderType: 0->medicine reminder. 1-> healthy habit
         """
-
         prior = self.fetch_health_information_by_id(id)
+
+        if comments not in prior:
+            raise ValueError("Value not in table")
+                
+
         prior = prior[1]
         prior = prior.split(',')
         if (not reminderType and not removing):
