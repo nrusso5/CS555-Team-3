@@ -78,7 +78,7 @@ class mySQLdb:
         """
         prior = self.fetch_health_information_by_id(id)
 
-        if comments not in prior:
+        if comments not in prior[1]:
             raise ValueError("Value not in table")
                 
 

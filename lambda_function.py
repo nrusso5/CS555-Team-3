@@ -487,7 +487,7 @@ class returnInfoandDeleteMedicine(AbstractRequestHandler):
         try:
             logger.debug("Connecting to the database")
             database = mySQLdb("--", "--", "--!", "--", b'--=')
-            database.edit_health_information("1000", "str(time) + "-" + str(medicine)", 0, 0)
+            database.edit_health_information("1000", str(time) + "-" + str(medicine), 0, 1)
             logger.debug("Data inserted successfully")
         except Exception as e:
             logger.error(f"Database connection or operation failed: {e}")
