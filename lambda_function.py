@@ -355,7 +355,7 @@ class returnInfoandAddHabit(AbstractRequestHandler):
         try:
             logger.debug("Connecting to the database")
             database = mySQLdb("--", "--", "--!", "--", b'--=')
-            database.edit_health_information("1000", str(time) + "-" + str(habit), 1)
+            database.edit_health_information("1000", str(time) + "-" + str(habit), 1, 0)
             logger.debug("Data inserted successfully")
         except Exception as e:
             logger.error(f"Database connection or operation failed: {e}")
@@ -391,9 +391,21 @@ class returnInfoandDeleteHabit(AbstractRequestHandler):
         """Clear to interact with the database"""
         session_attr["habit"] = habit
         session_attr["time"] = time
-        
-
-        speech = f"The habit {habit} at {time} has been deleted."
+        exist = True
+        try:
+            logger.debug("Connecting to the database")
+            database = mySQLdb("--", "--", "--!", "--", b'--=')
+            database.edit_health_information("1000", str(time) + "-" + str(habit), 1, 1)
+            logger.debug("Data inserted successfully")
+        except Exception as e:
+            logger.error(f"Database connection or operation failed: {e}")
+            exist = False
+            #raise
+            
+        if (exist):
+            speech = f"The habit {habit} at {time} has been deleted."
+        else:
+            speech = f"There doesn't seem to be a reminder for the habit {habit} at {time}"
         handler_input.response_builder.speak(speech).set_should_end_session(False)
         return handler_input.response_builder.response
 
@@ -427,15 +439,13 @@ class returnInfoandAddMedicine(AbstractRequestHandler):
             handler_input.response_builder.speak(speech).set_should_end_session(False)
             return handler_input.response_builder.response
         
-        """Clear to interact with the database"""
-        
         session_attr["time"] = time
         session_attr["medicine"] = medicine
         
         try:
             logger.debug("Connecting to the database")
             database = mySQLdb("--", "--", "--!", "--", b'--=')
-            database.edit_health_information("1000", str(time) + "-" + str(medicine), 0)
+            database.edit_health_information("1000", str(time) + "-" + str(medicine), 0, 0)
             logger.debug("Data inserted successfully")
         except Exception as e:
             logger.error(f"Database connection or operation failed: {e}")
@@ -473,9 +483,21 @@ class returnInfoandDeleteMedicine(AbstractRequestHandler):
         session_attr["medicine"] = medicine
         session_attr["time"] = time
         
-        """Clear to interact with the database"""
-        
-        speech = f"The medicine reminder {medicine} at {time} has been deleted."
+        exist = True
+        try:
+            logger.debug("Connecting to the database")
+            database = mySQLdb("--", "--", "--!", "--", b'--=')
+            database.edit_health_information("1000", "str(time) + "-" + str(medicine)", 0, 0)
+            logger.debug("Data inserted successfully")
+        except Exception as e:
+            logger.error(f"Database connection or operation failed: {e}")
+            exist = False
+            #raise
+        if (exist):
+            speech = f"The medicine reminder {medicine} at {time} has been deleted."
+        else:
+            speech = f"There doesn't seem to be a medicine reminder for {medicine} at {time}"
+            
         handler_input.response_builder.speak(speech).set_should_end_session(False)
         return handler_input.response_builder.response
 
